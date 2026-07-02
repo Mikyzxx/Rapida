@@ -16,7 +16,7 @@ export const initSplash = async () => {
     try {
       splashLoader.classList.remove('hidden');
       retryBtn.classList.add('hidden');
-      splashMessage.textContent = 'Cargando delicias...';
+      splashMessage.textContent = 'Cargando productos...';
 
       // Promise.all to fetch data and wait 2 seconds concurrently
       const [products] = await Promise.all([
