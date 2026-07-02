@@ -144,6 +144,7 @@ button {
   font-size: 1.5rem;
   font-weight: 800;
   color: var(--primary-color);
+  text-decoration: none;
 }
 
 .nav-search input {
