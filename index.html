@@ -99,6 +99,25 @@
         <span>Total:</span>
         <span id="cart-total">$0.00</span>
       </div>
+      
+      <div id="payment-section" class="payment-section hidden" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px dashed var(--border-color);">
+        <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Método de Pago</h3>
+        <div class="form-group">
+          <input type="text" id="card-name" placeholder="Nombre en la tarjeta" maxlength="50" required />
+        </div>
+        <div class="form-group">
+          <input type="text" id="card-number" placeholder="Número de tarjeta (16 dígitos)" maxlength="16" pattern="\d{16}" required />
+        </div>
+        <div style="display: flex; gap: 1rem;">
+          <div class="form-group" style="flex: 1;">
+            <input type="text" id="card-expiry" placeholder="MM/AA" maxlength="5" required />
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <input type="text" id="card-cvc" placeholder="CVC" maxlength="4" required />
+          </div>
+        </div>
+      </div>
+
       <div class="cart-actions">
         <button id="empty-cart-btn" class="btn-outline-danger">Vaciar</button>
         <button id="checkout-btn" class="btn-primary" disabled>Finalizar Compra</button>

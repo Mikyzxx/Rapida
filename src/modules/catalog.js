@@ -89,6 +89,7 @@ export const initCatalog = () => {
   searchInput.addEventListener('input', updateCatalog);
   categoryFilter.addEventListener('change', updateCatalog);
   sortSelect.addEventListener('change', updateCatalog);
+  window.addEventListener('stock-updated', updateCatalog);
 
   // Initial render
   renderProducts(state.products);

@@ -122,9 +122,17 @@ export const initCheckout = () => {
       
       showTicket(orderRecord);
       
+      // Reducir stock de los productos comprados
+      state.reduceStock(state.cart);
+      
       // Vaciar carrito después de compra exitosa
       state.updateCart([]);
       
+      // Limpiar datos de tarjeta
+      document.getElementById('card-name').value = '';
+      document.getElementById('card-number').value = '';
+      document.getElementById('card-expiry').value = '';
+      document.getElementById('card-cvc').value = '';
     } catch (error) {
       console.error(error);
       checkoutLoader.classList.add('hidden');

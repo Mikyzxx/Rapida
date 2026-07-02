@@ -27,5 +27,18 @@ export const state = {
       sessionStorage.removeItem('user');
     }
     window.dispatchEvent(new CustomEvent('user-updated'));
+  },
+
+  reduceStock(cartItems) {
+    const localStock = JSON.parse(localStorage.getItem('wamazon_stock')) || {};
+    cartItems.forEach(item => {
+      const product = this.products.find(p => p.id === item.id);
+      if (product && product.stock >= item.quantity) {
+        product.stock -= item.quantity;
+        localStock[product.id] = product.stock;
+      }
+    });
+    localStorage.setItem('wamazon_stock', JSON.stringify(localStock));
+    window.dispatchEvent(new CustomEvent('stock-updated'));
   }
 };

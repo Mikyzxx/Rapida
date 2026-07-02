@@ -26,10 +26,65 @@ export const initCart = () => {
     state.updateCart([]);
   });
 
+  const cardName = document.getElementById('card-name');
+  const cardNumber = document.getElementById('card-number');
+  const cardExpiry = document.getElementById('card-expiry');
+  const cardCvc = document.getElementById('card-cvc');
+  
+  [cardName, cardNumber, cardExpiry, cardCvc].forEach(input => {
+    input.addEventListener('input', validatePayment);
+  });
+
   window.addEventListener('cart-updated', renderCart);
   
   // Initial render
   renderCart();
+};
+
+export const validatePayment = () => {
+  const checkoutBtn = document.getElementById('checkout-btn');
+  const cardName = document.getElementById('card-name');
+  const cardNumber = document.getElementById('card-number');
+  const cardExpiry = document.getElementById('card-expiry');
+  const cardCvc = document.getElementById('card-cvc');
+  
+  if (state.cart.length === 0) {
+    checkoutBtn.disabled = true;
+    return;
+  }
+  
+  // Validar nombre (máximo 50 ya lo hace el HTML, pero verificamos longitud)
+  const nameVal = cardName.value.trim();
+  const nameValid = nameVal.length > 0 && nameVal.length <= 50;
+
+  // Validar y limpiar número (solo dígitos, 16)
+  const numVal = cardNumber.value.replace(/\D/g, '').substring(0, 16);
+  if (cardNumber.value !== numVal) cardNumber.value = numVal;
+  const numValid = numVal.length === 16;
+
+  // Validar y formatear expiración (MM/AA)
+  let expVal = cardExpiry.value.replace(/\D/g, '');
+  if (expVal.length > 2) {
+    expVal = expVal.substring(0, 2) + '/' + expVal.substring(2, 4);
+  }
+  if (cardExpiry.value !== expVal) cardExpiry.value = expVal;
+  
+  let expValid = false;
+  if (expVal.length === 5) {
+    const [month, year] = expVal.split('/');
+    const m = parseInt(month, 10);
+    const y = parseInt(year, 10);
+    if (m >= 1 && m <= 12 && y >= 15 && y <= 50) {
+      expValid = true;
+    }
+  }
+
+  // Validar CVC (solo dígitos, 3-4)
+  const cvcVal = cardCvc.value.replace(/\D/g, '').substring(0, 4);
+  if (cardCvc.value !== cvcVal) cardCvc.value = cvcVal;
+  const cvcValid = cvcVal.length >= 3;
+
+  checkoutBtn.disabled = !(nameValid && numValid && expValid && cvcValid);
 };
 
 export const addToCart = (productId) => {
@@ -95,8 +150,10 @@ const renderCart = () => {
   if (state.cart.length === 0) {
     cartItemsContainer.innerHTML = '<p style="text-align:center; color: var(--text-muted);">El carrito está vacío</p>';
     checkoutBtn.disabled = true;
+    document.getElementById('payment-section').classList.add('hidden');
   } else {
-    checkoutBtn.disabled = false;
+    document.getElementById('payment-section').classList.remove('hidden');
+    validatePayment();
     state.cart.forEach(item => {
       const itemEl = document.createElement('div');
       itemEl.className = 'cart-item';

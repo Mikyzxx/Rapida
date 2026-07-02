@@ -24,11 +24,14 @@ export const initSplash = async () => {
         delay(2000)
       ]);
 
+      // Leer stock guardado localmente si existe
+      const localStock = JSON.parse(localStorage.getItem('wamazon_stock')) || {};
+
       // Guardar productos en estado
-      // Usaremos rating.count como mock de "Stock"
+      // Usaremos el stock de localStorage, si no, rating.count o aleatorio
       state.products = products.map(p => ({
         ...p,
-        stock: p.rating ? p.rating.count : Math.floor(Math.random() * 50) + 1
+        stock: localStock[p.id] !== undefined ? localStock[p.id] : (p.rating ? p.rating.count : Math.floor(Math.random() * 50) + 1)
       }));
 
       // Extraer categorías únicas
