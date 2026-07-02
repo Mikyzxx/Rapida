@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rápida - Fast Food</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
+</head>
+
+<body>
+  <!-- Splash Screen -->
+  <div id="splash-screen" class="splash-screen">
+    <div class="splash-content">
+      <h1 class="logo-text">Rápida</h1>
+      <div id="splash-loader" class="loader"></div>
+      <p id="splash-message">Cargando delicias...</p>
+      <button id="retry-btn" class="hidden btn-primary">Reintentar</button>
+    </div>
+  </div>
+
+  <!-- Main Application -->
+  <div id="app-container" class="hidden">
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="nav-brand">Rápida</div>
+      <div class="nav-search">
+        <input type="text" id="search-input" placeholder="Buscar productos..." />
+      </div>
+      <div class="nav-actions">
+        <button id="login-btn" class="nav-btn">Ingresar</button>
+        <span id="user-display" class="hidden user-display"></span>
+        <button id="logout-btn" class="hidden nav-btn text-danger">Salir</button>
+        <button id="cart-toggle-btn" class="nav-btn cart-btn">
+          🛒 <span id="cart-badge" class="badge">0</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <!-- Controls Bar -->
+      <section class="controls-bar">
+        <div class="filter-group">
+          <label for="category-filter">Categoría:</label>
+          <select id="category-filter">
+            <option value="all">Todas</option>
+            <!-- Categories populated dynamically -->
+          </select>
+        </div>
+        <div class="sort-group">
+          <label for="sort-select">Ordenar por:</label>
+          <select id="sort-select">
+            <option value="default">Relevancia</option>
+            <option value="price-asc">Precio: Menor a Mayor</option>
+            <option value="price-desc">Precio: Mayor a Menor</option>
+            <option value="name-asc">Nombre: A-Z</option>
+            <option value="name-desc">Nombre: Z-A</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- Catalog Grid -->
+      <section id="catalog" class="catalog-grid">
+        <!-- Products populated dynamically -->
+      </section>
+    </main>
+  </div>
+
+  <!-- Cart Sidebar -->
+  <div id="cart-sidebar" class="cart-sidebar hidden">
+    <div class="cart-header">
+      <h2>Tu Pedido</h2>
+      <button id="close-cart-btn" class="close-btn">&times;</button>
+    </div>
+    <div id="cart-items" class="cart-items">
+      <!-- Cart items populated dynamically -->
+    </div>
+    <div class="cart-summary">
+      <div class="summary-row">
+        <span>Subtotal:</span>
+        <span id="cart-subtotal">$0.00</span>
+      </div>
+      <div class="summary-row">
+        <span>IVA (16%):</span>
+        <span id="cart-tax">$0.00</span>
+      </div>
+      <div class="summary-row text-success hidden" id="discount-row">
+        <span>Descuento:</span>
+        <span id="cart-discount">-$0.00</span>
+      </div>
+      <div class="summary-row total-row">
+        <span>Total:</span>
+        <span id="cart-total">$0.00</span>
+      </div>
+      <div class="cart-actions">
+        <button id="empty-cart-btn" class="btn-outline-danger">Vaciar</button>
+        <button id="checkout-btn" class="btn-primary" disabled>Finalizar Compra</button>
+      </div>
+    </div>
+  </div>
+  <div id="cart-overlay" class="overlay hidden"></div>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="modal hidden">
+    <div class="modal-content">
+      <button id="close-login-btn" class="close-btn">&times;</button>
+      <h2>Iniciar Sesión</h2>
+      <p class="modal-subtitle">Ingresa con tu usuario </p>
+      <form id="login-form">
+        <div class="form-group">
+          <input type="text" id="username-input" placeholder="Nombre de usuario" required />
+        </div>
+        <div class="form-group">
+          <input type="password" id="password-input" placeholder="Contraseña" required />
+        </div>
+        <p id="login-error" class="error-msg hidden">Usuario o contraseña incorrectos.</p>
+        <button type="submit" id="submit-login-btn" class="btn-primary w-100">Ingresar</button>
+      </form>
+    </div>
+  </div>
+  <div id="login-overlay" class="overlay hidden"></div>
+
+  <!-- Checkout Modal / Ticket -->
+  <div id="ticket-modal" class="modal hidden">
+    <div class="modal-content ticket-content">
+      <div id="checkout-loader" class="checkout-process hidden">
+        <div class="loader"></div>
+        <p id="checkout-status">Procesando...</p>
+      </div>
+      <div id="ticket-result" class="hidden">
+        <h2 class="text-success">¡Pedido Confirmado! 🎉</h2>
+        <div class="ticket-details">
+          <p><strong>Nº de Orden:</strong> <span id="ticket-order-id"></span></p>
+          <p><strong>Cliente:</strong> <span id="ticket-user"></span></p>
+          <hr>
+          <div id="ticket-items"></div>
+          <hr>
+          <div class="ticket-total">
+            <span>Total Pagado:</span>
+            <span id="ticket-total-amount"></span>
+          </div>
+        </div>
+        <button id="close-ticket-btn" class="btn-primary w-100 mt-4">Cerrar y Volver al Inicio</button>
+      </div>
+    </div>
+  </div>
+  <div id="ticket-overlay" class="overlay hidden"></div>
+
+  <script type="module" src="/main.js"></script>
+</body>
+
+</html>
