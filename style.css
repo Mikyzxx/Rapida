@@ -505,11 +505,53 @@ button {
 }
 
 @media (max-width: 768px) {
-  .controls-bar {
+  .navbar {
     flex-direction: column;
     gap: 1rem;
+    padding: 1rem;
+  }
+  .nav-search {
+    width: 100%;
   }
   .nav-search input {
-    width: 150px;
+    width: 100%;
+  }
+  .nav-actions {
+    width: 100%;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .controls-bar {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .filter-group, .sort-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .controls-bar select {
+    margin-left: 0;
+    width: 100%;
+  }
+  .logo-text {
+    font-size: 2.5rem;
+  }
+  .catalog-grid {
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+  .product-img-wrapper {
+    height: 120px;
+  }
+  .product-title {
+    font-size: 1rem;
+  }
+  .product-price {
+    font-size: 1.2rem;
+  }
+  .btn-primary, .btn-outline-danger {
+    padding: 0.6rem 1rem;
+    font-size: 0.9rem;
   }
 }
